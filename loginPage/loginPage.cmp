@@ -1,0 +1,50 @@
+<aura:component controller="auraMiniProject" implements = "force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,flexipage:availableForRecordHome,force:lightningQuickAction,forceCommunity:availableForAllPageTypes">
+
+    <aura:registerEvent name="appEvent" type="c:appEvent"/>
+
+    <aura:attribute name="Username" type="String"/>
+    <aura:attribute name="Password" type="String"/>
+    <aura:attribute name="User" type="Login__c" default="{sObject : 'Login__c'}" />
+    <aura:attribute name="ErrorMsg" type="String" default=""/>
+    
+    <div class="forbg" style="background-image: URL('/resource/scorpionbgimg'); background-repeat: no-repeat; background-size: cover; padding:1.5cm;">
+        <span id="logo"><img src="https://dof823s572inc.cloudfront.net/images/logo-2.2107191509420.png" alt="scorpion_logo"/></span>
+        <section id="sec1" name="sec1">
+            <a href="javascript:void(0)" id="btnh" onclick="{!c.showHomePage}">Home</a>
+        </section>
+        <br/>
+        <br/>
+        <br/>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-2" style="padding-left: 2%; padding-top: 2%; padding-bottom: 2%;">
+                <section id="sec2" name="sec2" style="padding-top: 30%; padding-bottom: 30%;">
+                    <p class="center-align" id="p1">WELCOME</p>
+                    <p class="center-align" id="p2"><sup></sup><span id="huge-text">BACK</span></p>
+                    <p id="p3">With Scorpion, you get the best technology, marketing, and people to grow your business.</p>
+                </section>
+            </div>
+
+            <div class="slds-col slds-size_1-of-2 slds-align_absolute-center">
+                <div class="slds-p-vertical_xx-large slds-box slds-theme_shade slds-m-around_x-large" style="width: 750px;">
+                    <div class="slds-box slds-theme_default slds-m-vertical_large">
+                        <h2 class="slds-text-heading_medium slds-align_absolute-center">LOGIN</h2>
+                        <div class="slds-form-element__control slds-p-around_xx-small">
+                            <lightning:input label="Username" name="username" value="{!v.Username}" required="true" />
+                        </div>
+                        <div class="slds-form-element__control slds-p-around_xx-small">
+                            <lightning:input label="Password:" type="password" name="password"  value="{!v.Password}" required="true" />
+                        </div>
+                        <div class="slds-form-element slds-p-around_xx-small">
+                            <lightning:button variant="Brand" label="Login" onblur="{!c.userLogin}" onclick="{!c.redirectServicePage}"/>
+                            <lightning:button variant="Brand" label="Sign Up" onclick="{!c.signUpBtnOnclick}"/>
+                            <a href="javascript:void(0)" onclick="{!c.forgotPassword}"  class="slds-float_right">Forgot Password?</a>
+                        </div>
+                        <div class="slds-form-element slds-p-around_xx-small" style="color: red; font-size: 10pt;">
+                            {!v.ErrorMsg}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

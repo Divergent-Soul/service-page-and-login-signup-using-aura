@@ -1,0 +1,261 @@
+<aura:component controller="auraMiniProject" >
+
+    <aura:attribute name="userDetail" type="Login__c"/>
+    <aura:attribute name="userId" type="String"/>
+    <aura:attribute name="userName" type="String"/>
+    <aura:attribute name="userPosition" type="String"/>
+    <aura:attribute name="numEvents" type="Integer" default="0"/>
+    <aura:attribute type="Case[]" name="caseList"/>
+    <aura:attribute type="Case[]" name="openCaseList"/>
+    <aura:attribute type="Case[]" name="closedCaseList"/>
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="closedColumns" type="List"/>
+    <aura:attribute name="selectedTab" type="String" default="openTab"/>
+
+    <aura:attribute name="UModalTruthy" type="Boolean" default="false"/>
+    <aura:attribute name="AModalTruthy" type="Boolean" default="false"/>
+    <aura:attribute name="pageTruthy" type="Boolean" default="false"/>
+    <aura:attribute name="UATruthy" type="Boolean"/>
+
+    <aura:attribute name="MCaseNumDef" type="String"/>
+    <aura:attribute name="MSubjectDef" type="String"/>
+    <aura:attribute name="MDescriptionDef" type="String"/>
+    <aura:attribute name="MPriorityDef" type="String"/>
+    <aura:attribute name="MStatusDef" type="String"/>
+    <aura:attribute name="MReasonDef" type="String"/>
+    <aura:attribute name="MTypeDef" type="String"/>
+    <aura:attribute name="LoginUserDef" type="String"/>
+
+    <aura:attribute name="MCaseNum" type="String" default="{!v.MCaseNumDef}"/>
+    <aura:attribute name="MSubject" type="String" default="{!v.MSubjectDef}"/>
+    <aura:attribute name="MDescription" type="String" default="{!v.MDescriptionDef}"/>
+    <aura:attribute name="MPriority" type="String" default="{!v.MPriorityDef}"/>
+    <aura:attribute name="MStatus" type="String" default="{!v.MStatusDef}"/>
+    <aura:attribute name="MReason" type="String" default="{!v.MReasonDef}"/>
+    <aura:attribute name="MType" type="String" default="{!v.MTypeDef}"/>
+    <aura:attribute name="LoginUser" type="String" default="{!v.LoginUserDef}"/>
+
+    <aura:attribute name="mapMarkers" type="Object"/>
+    <aura:attribute name="zoomLevel" type="Integer" />
+ 
+    <aura:handler event="c:appEvent" action="{!c.handleApplicationEvent}"/>
+
+
+<!--********************************************************** USER PAGE UI **********************************************************-->
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" /><link href="https://fonts.googleapis.com/css2?family=Rubik+80s+Fade&amp;display=swap" rel="stylesheet" />
+    <div>
+        <aura:if isTrue="{!v.UATruthy}">
+            <div class="forbg" style="background-image: URL('/resource/scorpionbgimg'); background-repeat: no-repeat; background-size: cover; padding:1.5cm;">
+                <span id="logo"><img src="https://dof823s572inc.cloudfront.net/images/logo-2.2107191509420.png" alt="scorpion_logo"/></span>
+                <section id="sec1" name="sec1">
+                    <a href="javascript:void(0)" id="btnh" onclick="{!c.logoutAction}">Logout</a>
+                </section>
+            <div>
+                <div style="padding-left: 2%; padding-right: 5%; padding-top: 10%; padding-bottom:5%" class="welMsg">
+                    Welcome Back {!v.userName}!
+                </div>
+                <div class="slds-box">
+                    <lightning:carousel disableAutoRefresh="false" disableAutoScroll="false">
+                        <lightning:carouselImage
+                            src = "/resource/c1img"
+                            alternativeText = "First carousel card"
+                            header = "Technology Addicts">
+                        </lightning:carouselImage>
+                        <lightning:carouselImage
+                            src = "/resource/c2img"
+                            alternativeText = "Second carousel card"
+                            header = "Artificial Intelligence">
+                        </lightning:carouselImage>
+                        <lightning:carouselImage
+                            src = "/resource/c3img"
+                            alternativeText = "Third carousel card"
+                            header = "Technology Landing">
+                        </lightning:carouselImage>
+                    </lightning:carousel>
+                </div>
+                
+                <div style="padding-top: 5%; color: white; font-weight:bolder; font-size:30pt; text-align:center; font-family: 'Rubik 80s Fade', cursive;">
+                    Raise Ticket / Ticket Status
+                </div>
+                
+                <div style="padding: 5%;">
+                    <div class="slds-card">
+                        <lightning:tabset variant="vertical" selectedTabId="{!v.selectedTab}" onselect="{!c.tabSelection}">
+                            <lightning:tab label="Raise a Ticket">
+                                <div>
+                                    <lightning:recordEditForm aura:id="recordEditForm" objectApiName="Case" onsuccess="{!c.fetchCase}">
+                                        <lightning:messages />
+                                        <div class="slds-grid">
+                                            <div class="slds-col slds-size_4-of-6" style="padding: 2%;">
+                                                <lightning:inputField fieldName="Subject" />
+                                                <lightning:inputField fieldName="Description" />
+                                                <lightning:inputField fieldName="Priority" />
+                                                <lightning:inputField fieldName="Type" />
+                                                <lightning:inputField fieldName="Reason" />
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-6" style="padding: 2%;">
+                                                <lightning:inputField fieldName="Login__c" value="{!v.userId}" disabled="true"/>
+                                                <lightning:inputField fieldName="Origin" value="Web" disabled="true"/>
+                                            </div>
+                                        </div>
+                                        <div style="padding: 2%;">
+                                            <lightning:button class="slds-m-top_small" variant="Brand" type="submit" label="Submit"/>
+                                            <lightning:button class="slds-m-top_small" variant="Neutral" type="reset" label="Cancel" onclick="{!c.handleReset}"/>
+                                        </div>
+                                    </lightning:recordEditForm>
+                                </div>
+                            </lightning:tab>
+                            <lightning:tab id="openTab" label="Open Tickets">
+                                <div style="height: 500px;">
+                                    <lightning:datatable data="{! v.caseList }" columns="{! v.mycolumns }" keyField="Id" hideCheckboxColumn="true" onrowaction="{!c.viewRecord}"/>
+                                </div>           
+                            </lightning:tab>
+                            <lightning:tab id="closedTab" label="Closed Tickets">
+                                <div style="height: 500px;">
+                                    <lightning:datatable data="{! v.caseList }" columns="{! v.closedColumns }" keyField="Id" hideCheckboxColumn="true" onrowaction="{!c.viewRecord}"/>
+                                </div> 
+                            </lightning:tab>
+                        </lightning:tabset>
+                    </div>
+                </div>
+                <div>
+                    <aura:if isTrue="{!v.UModalTruthy}">
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <!-- Modal/Popup Box Header Starts here-->
+                                <header class="slds-modal__header">
+                                    <lightning:buttonIcon iconName="utility:close"
+                                                        onclick="{! c.closeModel }"
+                                                        alternativeText="close"
+                                                        variant="bare-inverse"
+                                                        class="slds-modal__close"/>
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">TICKET DETAILS</h2>
+                                </header>
+                                <!--Modal/Popup Box Body Starts here-->
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                    <lightning:input name="MCaseNum" disabled="true" value="{!v.MCaseNum}" label="Case Number" />
+                                    <lightning:input name="MSubject" disabled="true" value="{!v.MSubject}" label="Subject" />
+                                    <lightning:textarea name="MDescription" disabled="true" value="{!v.MDescription}" label="Description" />
+                                    <lightning:input name="MPriority" disabled="true" value="{!v.MPriority}" label="Priority" />
+                                    <lightning:input name="MStatus" disabled="true" value="{!v.MStatus}" label="Status" />
+                                    <lightning:input name="MReason" disabled="true" value="{!v.MReason}" label="Case Reason" />
+                                    <lightning:input name="MType" disabled="true" value="{!v.MType}" label="Case Type" />
+                                </div>
+                                <!--Modal/Popup Box Footer Starts here-->
+                                <footer class="slds-modal__footer">
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </aura:if>
+                </div>
+            </div>
+            </div>
+            <div style="background-image: url(/resource/whitebgimg);">
+                <img src="/resource/svgimg" alt="SVG Image" />
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2 slds-align_absolute-center">
+                        <div class="slds-p-vertical_xx-large slds-box slds-m-around_x-large" style="width: 650px; height: 400px; text-align:center; background-color:rgb(243, 242, 244)">
+                            <img src="/resource/scorpionimg" />
+                            <p style="font-size: 18pt; font-weight:bolder">Scorpion Platform</p>
+                            <br/>
+                            <br/>
+                            <p style="font-size: 15pt;">The technology and insights that you need to keep your business moving up.</p>
+                            <br/>
+                            <br/>
+                            <p style="font-size: 12pt; opacity: 75%">Track and manage your reviews, create email campaigns, and see the success of your marketing from one powerful platform.</p>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2 slds-align_absolute-center">
+                        <div class="slds-p-vertical_xx-large slds-box slds-m-around_x-large" style="width: 650px; height: 400px; text-align:center; background-color:rgb(243, 242, 244)">
+                            <img src="/resource/markimg" />
+                            <p style="font-size: 18pt; font-weight:bolder">Marketing Services</p>
+                            <br/>
+                            <br/>
+                            <p style="font-size: 15pt;">Dedicated experts who are focused on getting you results.</p>
+                            <br/>
+                            <br/>
+                            <p style="font-size: 12pt; opacity: 75%">Unlike other companies that leave you to figure it all out on your own, our experts partner with you to help you reach your goals.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<!--********************************************************** AGENT PAGE UI **********************************************************-->
+            <aura:set attribute="else">
+                <div class="forbg" style="background-image: URL('/resource/scorpionbgimg'); background-repeat: no-repeat; background-size: cover; padding:1.5cm;">
+                    <span id="logo"><img src="https://dof823s572inc.cloudfront.net/images/logo-2.2107191509420.png" alt="scorpion_logo"/></span>
+                    <section id="sec1" name="sec1">
+                        <a href="javascript:void(0)" id="btnh" onclick="{!c.logoutAction}">Logout</a>
+                    </section>
+                <div class="">
+                    <div style="padding-left: 5%; padding-right: 5%; padding-top: 10%;" class="welMsg">
+                        Welcome Back {!v.userName}!
+                    </div>
+                    <br/>
+                    <div style="padding-left: 5%; padding-right: 5%; padding-bottom: 5%;">
+                        <div class="slds-card">
+                            <lightning:tabset variant="scoped" selectedTabId="{!v.selectedTab}" onselect="{!c.tabSelection}">
+                                <lightning:tab id="openTab" label="Open Tickets">
+                                    <div style="height: 500px;">
+                                        <lightning:datatable data="{! v.caseList }" columns="{! v.mycolumns }" keyField="Id" hideCheckboxColumn="true" onrowaction="{!c.viewRecord}"/>
+                                    </div>           
+                                </lightning:tab>
+                                <lightning:tab id="closedTab" label="Closed Tickets">
+                                    <div style="height: 500px;">
+                                        <lightning:datatable data="{! v.caseList }" columns="{! v.closedColumns }" keyField="Id" hideCheckboxColumn="true" onrowaction="{!c.viewRecord}"/>
+                                    </div> 
+                                </lightning:tab>
+                            </lightning:tabset>
+                        </div>
+                    </div>
+                    <div>
+                        <aura:if isTrue="{!v.AModalTruthy}">
+                            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                <div class="slds-modal__container">
+                                    <!-- Modal/Popup Box Header Starts here-->
+                                    <header class="slds-modal__header">
+                                        <lightning:buttonIcon iconName="utility:close"
+                                                            onclick="{! c.closeModel }"
+                                                            alternativeText="close"
+                                                            variant="bare-inverse"
+                                                            class="slds-modal__close"/>
+                                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">TICKET DETAILS</h2>
+                                    </header>
+                                    <!--Modal/Popup Box Body Starts here-->
+                                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                        <lightning:input name="MCaseNum" disabled="true" value="{!v.MCaseNum}" label="Case Number" />
+                                        <lightning:input name="MSubject" disabled="true" value="{!v.MSubject}" label="Subject" />
+                                        <lightning:input name="MPriority" disabled="true" value="{!v.MPriority}" label="Priority" />
+                                        <lightning:input name="LoginUser" disabled="true" value="{!v.LoginUser}" label="End User" />
+                                        <br/>
+                                        <lightning:map mapMarkers="{! v.mapMarkers }" zoomLevel="{!v.zoomLevel}" />
+                                        <lightning:textarea name="MDescription" disabled="true" value="{!v.MDescription}" label="Description" />
+                                        <lightning:input name="MStatus" disabled="true" value="{!v.MStatus}" label="Status" />
+                                        <lightning:input name="MReason" disabled="true" value="{!v.MReason}" label="Case Reason" />
+                                        <lightning:input name="MType" disabled="true" value="{!v.MType}" label="Case Type" />
+                                    </div>
+                                    <!--Modal/Popup Box Footer Starts here-->
+                                    <footer class="slds-modal__footer">
+                                    </footer>
+                                </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open"></div>
+                        </aura:if>
+                    </div>
+                </div>
+                </div>
+            </aura:set>
+        </aura:if>
+    </div>
+
+
+
+
+
+
+
+<div class="slds-align_absolute-center" style="background-image: URL('/resource/scorpionbgimg'); background-repeat: no-repeat; background-size: cover; padding-top:1cm; padding-bottom:1cm;">
+    <span id="logo"><img src="https://dof823s572inc.cloudfront.net/images/logo-2.2107191509420.png" alt="scorpion_logo"/></span>
+</div>
+</aura:component>

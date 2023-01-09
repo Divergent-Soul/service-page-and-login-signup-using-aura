@@ -1,0 +1,5 @@
+<aura:event type="APPLICATION">
+    <aura:attribute name="user" type="Login__c" default="{sObject : 'Login__c'}" />
+    <aura:attribute name="pageTruthy" type="Boolean"/>
+    <aura:attribute name="loginTruthy" type="Boolean"/>
+</aura:event>

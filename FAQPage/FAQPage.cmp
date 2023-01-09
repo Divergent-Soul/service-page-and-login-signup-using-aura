@@ -1,0 +1,82 @@
+<aura:component controller="auraMiniProject" implements = "force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,flexipage:availableForRecordHome,force:lightningQuickAction,forceCommunity:availableForAllPageTypes">
+    <div class="forbg" style="background-image: URL('/resource/scorpionbgimg'); background-repeat: no-repeat; background-size: cover; padding:1.5cm;">
+        <span id="logo"><img src="https://dof823s572inc.cloudfront.net/images/logo-2.2107191509420.png" alt="scorpion_logo"/></span>
+        <section id="sec1" name="sec1">
+            <a href="javascript:void(0)" id="btnh" onclick="{!c.showLoginPage}">Login</a>
+            &nbsp;&nbsp;
+            <a href="javascript:void(0)" id="btnh" onclick="{!c.showHomePage}">Home</a>
+        </section>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div style="color: white; font-weight:bolder; text-align:center; font-size: 30pt">
+            FAQ – Frequently Asked Questions
+        </div>
+        <br/>
+        <br/>
+        <div style="background-color: white; border-radius: 5px;">
+            <lightning:accordion aura:id="accordion">
+                <lightning:accordionSection name="A" label="Placing orders">
+                    <lightning:accordion aura:id="accordion">
+                        <lightning:accordionSection name="A" label="How can I place orders?">
+                                <p>There are two ways to place orders for our services:</p><br/>
+                                <p style="text-align: justify;">By using the Self-Service Marketplace (only for text creation, surveys and sentiment analysis)
+                                    or by placing an individual order and personal contact (managed service) to our sales team</p>
+                        </lightning:accordionSection>
+                        <lightning:accordionSection name="B" label="Which method of ordering is best for me?">
+                            <p style="text-align: justify;">In the areas of standardized text creation (with and without keywords), survey tasks and sentiment analysis, it is more advantageous and favorable for you to enter the order using the Self-Service Marketplace.</p>
+                            <p style="text-align: justify;">If you have large, individual projects from any service areas offered, please contact our sales team. They will provide personal advice and discuss the project with you.</p>
+                        </lightning:accordionSection>
+                        <lightning:accordionSection name="C" label="What is the order procedure?">
+                            <ul style="list-style-type:circle">
+                                <li>We determine the project specifications together with you.</li>
+                                <li>We develop a concept tailored to the individual needs of your project.</li>
+                                <li>We divide the project into individual, self-contained microjobs and put them on our job platform.</li>
+                                <li>The jobs are shown to, and quickly processed by the respectively qualified workers from our large network of Clickworkers.</li>
+                                <li>The results are subject to a quality control. Texts are also automatically checked for plagiarisms (by copyscape) and the specified keyword density.</li>
+                                <li>You will be sent the faultless results for approval.</li>
+                            </ul>
+                        </lightning:accordionSection>
+                        <lightning:accordionSection name="D" label="What preliminary information is needed for an offer?">
+                            <p>Depending on the service requested we will need the following specifications:</p><br/>
+                            <p><b>AI Datasets for Machine Learning</b></p>
+                            <p style="text-align: justify;">Type of training data, number, regions/countries, formats, quality requirements.</p><br/>
+                            <p><b>Text creation</b></p>
+                            <p style="text-align: justify;">Text length, text language, number of texts, quality requirements</p><br/>
+                            <p><b>SEO content services</b></p>
+                            <p style="text-align: justify;">Text length, text language, number of keywords per text, keyword density, number of texts, quality requirements</p>
+                        </lightning:accordionSection>
+                    </lightning:accordion>
+                </lightning:accordionSection>
+                <lightning:accordionSection name="B" label="Accepting the Result and Quality Control">
+                    <lightning:accordion aura:id="accordion">
+                        <lightning:accordionSection name="A" label="How is quality ensured?">
+                                <p style="text-align: justify;">For each task we select corresponding Clickworkers according to their individual skills. These skills have been verified through trainings and tests. Furthermore, their skills are continuously subjected to evaluation based on the work results. In addition, the high quality of the work results are secured by special quality management measures such as statistic process control, audits, peer reviews and evaluation.</p>
+                        </lightning:accordionSection>
+                        <lightning:accordionSection name="B" label="How do I receive the results?">
+                            <p style="text-align: justify;">The results are delivered to you by email, or loaded directly into your system/ application via API connection.</p>
+                            <p style="text-align: justify;">Optionally, you will get access to an AWS server where we will upload your results and where you can access the results.</p>
+                        </lightning:accordionSection>
+                        <lightning:accordionSection name="C" label="How great is the risk that the results do not meet my expectations?">
+                            <p style="text-align: justify;">We discuss the outcome requirements as accurately as possible in advance. Furthermore, when we are dealing with large orders, we agree on a test order to ensure correct and faultless processing.</p><br/>
+                        </lightning:accordionSection>
+                    </lightning:accordion>
+                </lightning:accordionSection>
+                <lightning:accordionSection name="C" label="Payment">
+                    <lightning:accordion aura:id="accordion">
+                        <lightning:accordionSection name="A" label="What does an order cost?">
+                                <p style="text-align: justify;">The costs are calculated according to the amount of time involved and the quality requirements. These vary from project to project. Therefore, per project, you will receive an individual offer on demand.</p>
+                        </lightning:accordionSection>
+                        <lightning:accordionSection name="B" label="How and when do I receive the invoices?">
+                            <p style="text-align: justify;">Invoices are issued at the end of the month for the results rendered until then, and will be sent to you by mail or email.</p>
+                        </lightning:accordionSection>
+                    </lightning:accordion>
+                </lightning:accordionSection>
+            </lightning:accordion>
+        </div>
+    </div>
+    <div class="slds-align_absolute-center" style="background-image: URL('/resource/scorpionbgimg'); background-repeat: no-repeat; background-size: cover; padding-top:1cm; padding-bottom:1cm;">
+        <span id="logo"><img src="https://dof823s572inc.cloudfront.net/images/logo-2.2107191509420.png" alt="scorpion_logo"/></span>
+    </div>
+</aura:component>

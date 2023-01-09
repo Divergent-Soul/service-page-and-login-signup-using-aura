@@ -1,0 +1,69 @@
+<aura:component controller="auraMiniProject" implements = "force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,flexipage:availableForRecordHome,force:lightningQuickAction,forceCommunity:availableForAllPageTypes">
+    <link rel="stylesheet" href="scorpion.css" />
+    <div class="forbg" style="background-image: URL('/resource/scorpionbgimg'); background-repeat: no-repeat; background-size: cover; padding:1.5cm;">
+        <span id="logo"><img src="https://dof823s572inc.cloudfront.net/images/logo-2.2107191509420.png" alt="scorpion_logo"/></span>
+        <section id="sec1" name="sec1">
+            <a href="https://www.scorpion.co/technology/">Technology</a>
+            <a href="https://www.scorpion.co/marketing/">Marketing</a>
+            <a href="https://www.scorpion.co/who-we-help/">Who We Help</a>
+            <a href="https://www.scorpion.co/resources/">Resources</a>
+            <a href="javascript:void(0)" onclick="{!c.FAQPage}">FAQs</a>
+            <a href="javascript:void(0)" id="btnh" onclick="{!c.showLoginPage}">Login</a>
+        </section>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <section id="sec2" name="sec2">
+            <p class="center-align" id="p1">The Smart Way</p>
+            <p class="center-align" id="p2"><sup>to</sup><span id="huge-text">Grow</span></p>
+            <p id="p3">With Scorpion, you get the best technology, marketing, and people to grow your business.</p>
+            <br/>
+            <br/>
+        </section>
+        <section id="sec3" name="sec3">
+            <br/>
+            <br/>
+            <br/>
+            <img src="https://dof823s572inc.cloudfront.net/assets/mainstage/mainstage-img.2110060941507.png" alt="Anayltics" />
+        </section>
+    </div>
+    <div class="slds-box slds-theme_default">
+        <div class="row">
+            <div class="column" id="col1">
+                <p><img src="https://dof823s572inc.cloudfront.net/cms/svg/site/icon_tail.36.007FFD.svg" alt="icon" id="desicon" /></p>
+                <p id="head1">Local Insights.</p>
+                <p id="head2">Technology-Driven Results.</p>
+                <p id="p1">Understand your business and where every dollar goes.</p>
+                <br/>
+                <p class="p2">At Scorpion, we have the technology to connect all of your marketing and show you the results you expect from the money you spend. From our research and customer management software to our artificial intelligence-led search engine products, we have the latest technology to grow your business.</p> 
+                <br/>
+                <p class="p2">Once the technology is in place, our team of specialists will partner with you along the way to handle all of the marketing for your business, so you can focus on providing a great experience to your customers.</p>
+            </div>
+            <div class="column" id="col2">
+                <img src="https://dof823s572inc.cloudfront.net/assets/content/scorpion-app.2110141021482.jpg" alt="Manager" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="column" id="col1">
+                <img src="https://dof823s572inc.cloudfront.net/assets/content/coworkers.2109282248550.jpg" alt="Manager" />
+            </div>
+            <div class="column" id="col2">
+                <p><img src="https://dof823s572inc.cloudfront.net/cms/svg/site/icon_tail.36.007FFD.svg" alt="icon" id="desicon" /></p>
+                <p id="head1">Marketing You Can Trust.</p>
+                <p id="head2">Results You Can See.</p>
+                <p id="p1">Stop wasting money on ineffective marketing. Get the custom plan for your business.
+                </p>
+                <br/>
+                <p class="p2">For over 20 years, Scorpion has worked with small business owners in legal, home services, medical, and other industries just like yours. Our team will build you the best website, advertising, social media, and other marketing content to grow your business.</p> 
+            </div>
+        </div>
+    </div>
+    <div class="slds-align_absolute-center" style="background-image: URL('/resource/scorpionbgimg'); background-repeat: no-repeat; background-size: cover; padding-top:1cm; padding-bottom:1cm;">
+        <span id="logo"><img src="https://dof823s572inc.cloudfront.net/images/logo-2.2107191509420.png" alt="scorpion_logo"/></span>
+    </div>
+</aura:component>

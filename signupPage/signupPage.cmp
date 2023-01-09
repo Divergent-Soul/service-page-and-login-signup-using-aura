@@ -1,0 +1,77 @@
+<aura:component  controller="auraMiniProject" implements = "force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,flexipage:availableForRecordHome,force:lightningQuickAction,forceCommunity:availableForAllPageTypes">
+
+    <aura:attribute name="LPassword" type="String"/>
+    <aura:attribute name="LOTP" type="String"/>
+    <aura:attribute name="VOTP" type="String"/>
+    <aura:attribute name="userNameList" type="String[]"/>
+    <aura:attribute name="signupTruthy" type="Boolean" default="false"/>
+    <aura:attribute name="signupPageTruthy" type="Boolean" default="true"/>
+    <aura:attribute name="signupPasswordTruthy" type="Boolean" default="false"/>
+    <aura:attribute name="signupOTPTruthy" type="Boolean" default="false"/>
+    <aura:attribute name="forgotPasswordTruthy" type="Boolean" default="false"/>
+    
+    
+    <div class="forbg" style="background-image: URL('/resource/scorpionbgimg'); background-repeat: no-repeat; background-size: cover; padding:1.5cm;">
+        <span id="logo"><img src="https://dof823s572inc.cloudfront.net/images/logo-2.2107191509420.png" alt="scorpion_logo"/></span>
+        <section id="sec1" name="sec1">
+            <a href="javascript:void(0)" id="btnh" onclick="{!c.showHomePage}">Home</a>
+        </section>
+        <br/>
+        <br/>
+        <br/>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-2" style="padding-left: 2%; padding-top: 2%; padding-bottom: 2%;">
+                <section id="sec2" name="sec2" style="padding-top: 55%; padding-bottom: 10%;">
+                    <p class="center-align" id="p1">CREATE YOUR WAY</p>
+                    <p class="center-align" id="p2"><sup>to</sup><span id="huge-text">JOIN</span></p>
+                    <p id="p3">With Scorpion, you get the best technology, marketing, and people to grow your business.</p>
+                </section>
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-align_absolute-center">
+                <div class="slds-p-vertical_xx-large slds-box slds-theme_shade slds-m-around_x-large" style="width: 750px;">
+                    <div class="slds-box slds-theme_default slds-m-vertical_large">
+                        <h2 class="slds-text-heading_medium slds-align_absolute-center">CREATE NEW ACCOUNT</h2>
+                        <div class="slds-form-element__control slds-p-around_xx-small">
+                            <lightning:recordEditForm aura:id="recordEditForm" objectApiName="Login__c" onload="{!c.signUpOnLoad}" onsubmit="{!c.signUpOnSubmit}" onsuccess="{!c.showLoginPage}">
+                                <lightning:messages />
+                                <lightning:inputField fieldName="Name__c" />
+                                <lightning:inputField fieldName="Phone__c" />
+                                <lightning:inputField fieldName="Address__Street__s" />
+                                <lightning:inputField fieldName="Address__City__s" />
+                                <lightning:inputField fieldName="Address__CountryCode__s" />
+                                <lightning:inputField fieldName="Address__StateCode__s" />
+                                <lightning:inputField fieldName="Address__PostalCode__s" />
+                                <lightning:inputField fieldName="Position__c" />
+                                <lightning:inputField fieldName="Email__c" aura:id="ema"/>
+                                <lightning:inputField fieldName="Username__c" aura:id="use"/>
+                                <lightning:inputField fieldName="Password__c" aura:id="pas" required="true"/>
+                                <div style="padding-left: 1%;">
+                                    <lightning:input label="Confirm Password" type="password" name="LConPassword" value="{!v.LPassword}" required="true" />
+                                </div>
+                                <aura:if isTrue="{!v.signupPasswordTruthy}">
+                                    <div class="slds-form-element slds-p-around_xx-small" style="color: red; font-size: 10pt;">
+                                        *Password does not match
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{!v.signupTruthy}">
+                                    We have shared an OTP to your email.
+                                    <lightning:input name="OTP" type="String" label="Enter OTP" value="{!v.VOTP}" required="true" />
+                                    <aura:if isTrue="{!v.signupOTPTruthy}">
+                                    <div class="slds-form-element slds-p-around_xx-small" style="color: red; font-size: 10pt;">
+                                        *OTP Incorrect
+                                    </div>
+                                </aura:if>
+                                    <lightning:button class="slds-m-top_small" type="submit" label="Verify OTP" />
+                                    <aura:set attribute="else">
+                                        <lightning:button class="slds-m-top_small" type="submit" label="Submit" />
+                                    </aura:set>
+                                </aura:if>
+                                <lightning:button class="slds-m-top_small" label="Cancel" onclick="{!c.showLoginPage}" />
+                            </lightning:recordEditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>
